@@ -6,7 +6,37 @@ import "./App.css";
 // •	одного . в числе
 // •	предотвращение нескольких нулей в начале числа
 function App() {
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState("0");
+
+  const handleInput = (event) => {
+    if (event.target.value === ".") {
+      if (display.toString()[display.length - 1] === ".") {
+        return;
+      }
+    }
+    if (event.target.value === "0") {
+      if (display.toString()[0] === "0") {
+        return;
+      }
+    }
+    if (display.toString()[0] === "0") {
+      const input = event.target.value;
+      const newDisplay = display + input;
+      return setDisplay(newDisplay.toString().slice(1));
+    }
+    const input = event.target.value;
+    setDisplay(display + input);
+  };
+
+  const handleEvaluate = () => {
+    try {
+      const result = eval(display);
+      setDisplay(result.toString());
+    } catch (error) {
+      setDisplay("Error");
+    }
+  };
+
   return (
     <div className="container mt-5 text-center">
       <div id="display" className="mb-3 fs-4 border rounded p-2 bg-light">
@@ -21,7 +51,7 @@ function App() {
               <button
                 id="one"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "1")}
+                onClick={() => handleInput({ target: { value: "1" } })}
               >
                 1
               </button>
@@ -30,7 +60,7 @@ function App() {
               <button
                 id="two"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "2")}
+                onClick={() => handleInput({ target: { value: "2" } })}
               >
                 2
               </button>
@@ -39,7 +69,7 @@ function App() {
               <button
                 id="three"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "3")}
+                onClick={() => handleInput({ target: { value: "3" } })}
               >
                 3
               </button>
@@ -49,7 +79,7 @@ function App() {
               <button
                 id="four"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "4")}
+                onClick={() => handleInput({ target: { value: "4" } })}
               >
                 4
               </button>
@@ -58,7 +88,7 @@ function App() {
               <button
                 id="five"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "5")}
+                onClick={() => handleInput({ target: { value: "5" } })}
               >
                 5
               </button>
@@ -67,7 +97,7 @@ function App() {
               <button
                 id="six"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "6")}
+                onClick={() => handleInput({ target: { value: "6" } })}
               >
                 6
               </button>
@@ -77,7 +107,7 @@ function App() {
               <button
                 id="seven"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "7")}
+                onClick={() => handleInput({ target: { value: "7" } })}
               >
                 7
               </button>
@@ -86,7 +116,7 @@ function App() {
               <button
                 id="eight"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "8")}
+                onClick={() => handleInput({ target: { value: "8" } })}
               >
                 8
               </button>
@@ -95,7 +125,7 @@ function App() {
               <button
                 id="nine"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "9")}
+                onClick={() => handleInput({ target: { value: "9" } })}
               >
                 9
               </button>
@@ -105,7 +135,7 @@ function App() {
               <button
                 id="clear"
                 className="btn btn-danger w-100"
-                onClick={() => setDisplay("")}
+                onClick={() => setDisplay("0")}
               >
                 AC
               </button>
@@ -114,7 +144,7 @@ function App() {
               <button
                 id="zero"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + "0")}
+                onClick={() => handleInput({ target: { value: "0" } })}
               >
                 0
               </button>
@@ -123,7 +153,7 @@ function App() {
               <button
                 id="decimal"
                 className="btn btn-dark w-100"
-                onClick={() => setDisplay(display + ".")}
+                onClick={() => handleInput({ target: { value: "." } })}
               >
                 .
               </button>
@@ -167,7 +197,7 @@ function App() {
           <button
             id="equals"
             className="btn btn-success"
-            onClick={() => setDisplay(eval(display))}
+            onClick={() => handleEvaluate()}
           >
             =
           </button>
