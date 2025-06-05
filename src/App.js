@@ -50,7 +50,8 @@ function App() {
 
   const handleEvaluate = () => {
     try {
-      const result = evaluate(display);
+      let cleaned = display.replace(/\b0+(?=\d)/g, ""); // remove leading zeros
+      const result = evaluate(cleaned);
       setDisplay(result.toString());
     } catch (error) {
       setDisplay("Error");
